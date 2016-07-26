@@ -26,37 +26,41 @@ the GLFW 3 API.
 
 ## Compiling GLFW
 
-See the [Compiling GLFW](http://www.glfw.org/docs/latest/compile.html) guide in
-the GLFW documentation.
+GLFW itself needs only the headers and libraries for your window system.  It
+does not need the headers for any context creation API (WGL, GLX, EGL, NSGL) or
+rendering API (OpenGL, OpenGL ES, Vulkan) to enable support for them.
+
+GLFW supports compilation on Windows with Visual C++ 2010 and later, MinGW and
+MinGW-w64, on OS X with Clang and on Linux and other Unix-like systems with GCC
+and Clang.  It will likely compile in other environments as well, but this is
+not regularly tested.
+
+There are also [pre-compiled Windows
+binaries](http://www.glfw.org/download.html) available for all compilers
+supported on that platform.
+
+See the [compilation guide](http://www.glfw.org/docs/latest/compile.html) in the
+documentation for more information.
 
 
 ## Using GLFW
 
-See the
-[Building programs that use GLFW](http://www.glfw.org/docs/latest/build.html)
-guide in the GLFW documentation.
+See the [building application guide](http://www.glfw.org/docs/latest/build.html)
+guide in the documentation for more information.
 
 
-## Reporting bugs
+## System requirements
 
-Bugs are reported to our [issue tracker](https://github.com/glfw/glfw/issues).
-Please always include the name and version of the OS where the bug occurs and
-the version of GLFW used.  If you have cloned it, include the commit ID used.
+GLFW supports Windows XP and later, OS X 10.7 Lion and later, and Linux and
+other Unix-like systems with the X Window System.  Experimental implementations
+for the Wayland protocol and the Mir display server are available but not yet
+officially supported.
 
-If it's a build issue, please also include the build log and the name and
-version of your development environment.
-
-If it's a context creation issue, please also include the make and model of your
-graphics card and the version of your driver.
-
-This will help both us and other people experiencing the same bug.
+See the [compatibility guide](http://www.glfw.org/docs/latest/compat.html)
+in the documentation for more information.
 
 
 ## Dependencies
-
-GLFW itself needs only the headers and libraries for your window system.  It
-does not need the headers for any context creation API (WGL, GLX, EGL, NSGL) or
-rendering API (OpenGL, OpenGL ES, Vulkan) to enable support for them.
 
 The examples and test programs depend on a number of tiny libraries.  These are
 located in the `deps/` directory.
@@ -78,9 +82,28 @@ The documentation is generated with [Doxygen](http://doxygen.org/).  If CMake
 does not find Doxygen, the documentation will not be generated.
 
 
+## Reporting bugs
+
+Bugs are reported to our [issue tracker](https://github.com/glfw/glfw/issues).
+Please check the [contribution
+guide](https://github.com/glfw/glfw/blob/master/.github/CONTRIBUTING.md) for
+information on what to include when reporting a bug.
+
+
 ## Changelog
 
-- Bugfix: The range checks for `glfwSetCursorPos` used the wrong minimum
+ - Added on-demand loading of Vulkan and context creation API libraries
+ - Bugfix: Single compilation unit builds failed due to naming conflicts (#783)
+ - Bugfix: The range checks for `glfwSetCursorPos` used the wrong minimum (#773)
+ - [Win32] Bugfix: `glfwSetClipboardString` created an unnecessary intermediate
+                   copy of the string
+ - [Win32] Bugfix: Examples failed to build on Visual C++ 2010 due to C99 in
+                   `linmath.h` (#785)
+ - [Win32] Bugfix: The first shown window ignored the `GLFW_MAXIMIZED` hint
+                   when the process was provided a `STARTUPINFO` (#780)
+ - [GLX] Bugfix: Dynamically loaded entry points were not verified
+ - [EGL] Added `lib` prefix matching between EGL and OpenGL ES library binaries
+ - [EGL] Bugfix: Dynamically loaded entry points were not verified
 
 
 ## Contact
@@ -203,7 +226,7 @@ skills.
  - Nathan Sweet
  - TTK-Bandit
  - Sergey Tikhomirov
- - A. Tombs
+ - Arthur Tombs
  - Ioannis Tsakpinis
  - Samuli Tuomola
  - urraka
